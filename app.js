@@ -8,6 +8,7 @@ xhr.onreadystatechange = function() {
     // loop through messages and add them to the page
     for (var i = 0; i < data.length; i++) {
       var entry = document.createElement("div");
+      reply.classList.add("comment");
       var paragraph = document.createElement("p");
       var name = document.createElement("strong");
       name.textContent = data[i].name;
@@ -18,6 +19,7 @@ xhr.onreadystatechange = function() {
       // add reply div if reply is not empty
       if(data[i].rname != "" || data[i].rmessage != "") {
         var reply = document.createElement("div");
+        reply.classList.add("reply");
         var reply_name = document.createElement("strong");
         reply_name.textContent = data[i].rname;
         var reply_message = document.createElement("p");
