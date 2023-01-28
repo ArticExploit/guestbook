@@ -33,5 +33,5 @@ if(isset($_POST['submit'])){
         }
     }
 }
-header("Location: https://articexploit.xyz:8443/test/");
+header("Location: https://example.org");
 exit();
