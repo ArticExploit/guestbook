@@ -14,4 +14,7 @@ This implementation has a few basic features.
 ## Implementation into your website
 The only thing you need to figure out on your own is the css. The javascript creates 2 divs: one for the comment and another one if there is a reply to be displayed. The first one has the class "comment" the second has the class "reply", use those in the css to have proper formatting.
 
-Other than that, simply download and put the files in the directory of your web server where you want the guestbook to be (can also be used as a comment sections). 
+Other than that, simply download the files, put them in the directory of your web server where you want the guestbook to be and change the url at the bottom of the submission.php file to match that of the webpage the guestbook is in.
+
+### Bonus :D
+This was thought of as a guestbook, but would work just as well as a comment section for a blog for example.
