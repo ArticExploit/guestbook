@@ -11,7 +11,7 @@ This implementation has a few basic features.
 ## Installation
 - Clone/Download the repo
 - Place the files in the directory of your webserver where you want the guestbook to be
-- Change the at the bottom of the submission.php file to match that of the webpage the guestbook is in
+- Change url the at the bottom of the submission.php file to match that of the webpage the guestbook is in
 
 ## Implementation into your website
 The only thing you need to figure out on your own is the css. The javascript creates 2 divs: one for the comment and another one if there is a reply to be displayed. The first one has the class "comment" the second has the class "reply", use those in the css to have proper formatting.
