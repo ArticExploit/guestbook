@@ -4,7 +4,6 @@ if(isset($_POST['submit'])){
     // get form data
     $name = $_POST['name'];
     $message = $_POST['message'];
-    // set rname and rmessage to empty string
     $rname = "";
     $rmessage = "";
 
@@ -16,7 +15,11 @@ if(isset($_POST['submit'])){
     // if message is not empty
     if(!empty($message)){
         // get existing json data
-        $data = json_decode(file_get_contents('data.json'), true);
+        if (file_exists('data.json') && filesize('data.json') > 0) {
+            $data = json_decode(file_get_contents('data.json'), true);
+        } else {
+            $data = array();
+        }
         $flag = true;
         // loop through previous submissions
         foreach ($data as $submission) {
