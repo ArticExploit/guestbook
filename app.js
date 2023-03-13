@@ -8,7 +8,7 @@ xhr.onreadystatechange = function() {
     // loop through messages and add them to the page
     for (var i = 0; i < data.length; i++) {
       var entry = document.createElement("div");
-      reply.classList.add("comment");
+      entry.classList.add("comment");
       var paragraph = document.createElement("p");
       var name = document.createElement("strong");
       name.textContent = data[i].name;
