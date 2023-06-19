@@ -1,5 +1,5 @@
 ## Working demo
-https://articexploit.xyz:8443/demo/
+https://articexploit.xyz/demo/
 
 ## Features
 This implementation has a few basic features.
