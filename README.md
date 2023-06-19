@@ -9,6 +9,7 @@ This implementation has a few basic features.
 - **rudimentary reply function**: the php will always write 2 empty items in the json file for every submission object, the "rname" and "rmessage" items. These can be used by the webmaster to reply to comments by writing directly writing in the json file. The javascript code will also automatically hide the whole div the reply is in, if it detects that the reply items are empty.
 
 ## Installation
+- Install php
 - Clone/Download the repo
 - Place the files in the directory of your webserver where you want the guestbook to be
 - Change url the at the bottom of the submission.php file to match that of the webpage the guestbook is in
