@@ -1,3 +1,9 @@
+## To Do
+A rewrite is needed since this guestbook doesn't allow for replies to replies, nor it does anything for spam protection.
+- Add replies available to users
+- Add captcha system
+- Word block list (?)
+
 ## Working demo
 https://articexploit.xyz/demo/
 
