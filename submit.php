@@ -32,7 +32,7 @@ if(isset($_POST['submit'])){
         // if current submission does not match any previous submissions, append it to the JSON file
         if ($flag) {
             array_unshift($data, array("name" => $name, "message" => $message,"rname" => $rname,"rmessage" => $rmessage));
-            file_put_contents('data.json', json_encode($data));
+            file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
         }
     }
 }
