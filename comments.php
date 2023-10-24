@@ -1,4 +1,4 @@
-<div class="entry">
+<div>
     <h2>Leave a Message</h2>
     <form action="" method="post">
         <input class="box" type="text" id="name" name="name" placeholder="enter name or leave empty for anon"><br><br>
