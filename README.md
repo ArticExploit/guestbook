@@ -13,7 +13,7 @@ This implementation has a few basic features.
 - **anon name substitution**: if the php code detects that no name was input it automatically defaults to using anon.
 - **empty or duplicate message detection**: if the code detects that the message input is empty or a duplicate from another message it won't write anything to the json file.
 - **rudimentary reply function**: the php will always write 2 empty items in the json file for every submission object, the "rname" and "rmessage" items. These can be used by the webmaster to reply to comments by writing directly writing in the json file. The code will also automatically hide the whole div the reply is in, if it detects that the reply items are empty.
-- **captcha system**: users will have to solve a captcha to post a message, makes it so the guestbook won't be as spammable. (this is an adapted version of the one developed by hnxh you can check it out here [captcha](https://github.com/hnhx/captcha))
+- **captcha system**: users will have to solve a captcha to post a message, makes it so the guestbook won't be as spammable. (this is an adapted version of the one developed by hnxh you can check it out [here](https://github.com/hnhx/captcha))
 
 ## Installation
 - Install php
