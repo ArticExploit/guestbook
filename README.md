@@ -3,6 +3,7 @@ A rewrite is needed since this guestbook doesn't allow for replies to replies, n
 - Add replies available to users
 - ~~Add captcha system~~
 - Word block list (?)
+- Add time and date to the posted message
 
 ## Working demo
 https://articexploit.xyz/demo/
