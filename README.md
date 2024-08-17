@@ -16,6 +16,8 @@ This implementation has a few basic features.
 - **empty or duplicate message detection**: if the code detects that the message input is empty or a duplicate from another message it won't write anything to the json file.
 - **rudimentary reply function**: the php will always write 2 empty items in the json file for every submission object, the "rname" and "rmessage" items. These can be used by the webmaster to reply to comments by writing directly writing in the json file. The code will also automatically hide the whole div the reply is in, if it detects that the reply items are empty.
 - **captcha system**: users will have to solve a captcha to post a message, makes it so the guestbook won't be as spammable. (this is an adapted version of the one developed by hnxh you can check it out [here](https://github.com/hnhx/captcha))
+- **character limit**: the webmaster can set the character limit that commenters can use in their messages, it's done through the variable at the start of [comments.php](https://github.com/ArticExploit/guestbook/blob/main/comments.php) (set to 0 for no limit).
+- **error messages**: error messages for users: invalid captcha and character limit, these also show the message the user typed out so they won't have to type the whole thing again.
 
 ## Installation
 - Install php
