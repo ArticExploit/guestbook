@@ -1,31 +1,38 @@
 <?php
+// Initialize the character limit for messages
+$character_limit = 500; // Set this variable to whatever limit you want, if set to 0 it's unlimited
+
 // If the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check the captcha
     if ($_SESSION["captcha"] != $_POST["captcha"]) {
-        $errorMsg = "Invalid captcha";
+        $errorMsg = "Invalid captcha (It's case sensitive)";
     } else {
         // Get the form data
         $name = $_POST['name'] ? $_POST['name'] : "anon";
         $message = $_POST['message'];
         if (!empty($message)) {
-            // Load the existing data
-            $data = array();
-            if (file_exists('data.json') && filesize('data.json') > 0) {
-                $data = json_decode(file_get_contents('data.json'), true);
-            }
-            // Check if the message already exists
-            $flag = true;
-            foreach ($data as $submission) {
-                if ($submission['name'] == $name && $submission['message'] == $message) {
-                    $flag = false;
-                    break;
+            if ($character_limit > 0 && strlen($message) > $character_limit) {
+                $errorMsg = "Your message exceeds the character limit of " . $character_limit;
+            } else {
+                // Load the existing data
+                $data = array();
+                if (file_exists('data.json') && filesize('data.json') > 0) {
+                    $data = json_decode(file_get_contents('data.json'), true);
                 }
-            }
-            // If the message is new, add it to the data
-            if ($flag) {
-                array_unshift($data, array("name" => $name, "message" => $message, "rname" => "", "rmessage" => ""));
-                file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
+                // Check if the message already exists
+                $flag = true;
+                foreach ($data as $submission) {
+                    if ($submission['name'] == $name && $submission['message'] == $message) {
+                        $flag = false;
+                        break;
+                    }
+                }
+                // If the message is new, add it to the data
+                if ($flag) {
+                    array_unshift($data, array("name" => $name, "message" => $message, "rname" => "", "rmessage" => ""));
+                    file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
+                }
             }
         }
     }
@@ -45,8 +52,8 @@ $data = json_decode($json, true);
     </form>
     <?php if (isset($errorMsg)): ?>
         <div class="entrysq">
-            <h2><?= $errorMsg ?></h2>
-            <p>it's case sensitive!</p>
+            <h2>Error</h2>
+            <p><?= $errorMsg ?></p>
         </div>
     <?php endif; ?>
     <div class="entrysq">
