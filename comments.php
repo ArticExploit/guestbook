@@ -9,9 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Get the form data
         $name = $_POST['name'] ? $_POST['name'] : "anon";
-        $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8');
+        $message = $_POST['message'];
         // Check the character limit
         if ($characterLimit > 0 && strlen($message) > $characterLimit) {
+            $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8');
             $errorMsg = "Message exceeds the character limit of $characterLimit characters<br><h3>Your Message</h3><p>$message</p>";
         } else if (!empty($message)) {
             // Load the existing data
