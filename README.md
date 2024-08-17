@@ -2,6 +2,7 @@
 A rewrite is needed since this guestbook doesn't allow for replies to replies, nor it does anything for spam protection.
 - Add replies available to users
 - ~~Add captcha system~~
+- Add possibility of char limit
 - Word block list (?)
 - Add time and date to the posted message
 
