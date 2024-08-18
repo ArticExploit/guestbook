@@ -1,10 +1,11 @@
 ## To Do
 A rewrite is needed since this guestbook doesn't allow for replies to replies, nor it does anything for spam protection.
-- Add replies available to users
 - ~~Add captcha system~~
 - ~~Add possibility of char limit~~
-- Word block list (?)
 - Add time and date to the posted message
+- Add new possible fields (email, website)
+- Add possibility to use a word blocklist
+- Add possibility to create aliases for words
 
 ## Working demo
 https://articexploit.xyz/demo/
