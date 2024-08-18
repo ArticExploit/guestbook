@@ -1,12 +1,3 @@
-## To Do
-A rewrite is needed since this guestbook doesn't allow for replies to replies, nor it does anything for spam protection.
-- ~~Add captcha system~~
-- ~~Add possibility of char limit~~
-- Add time and date to the posted message
-- Add new possible fields (email, website)
-- Add possibility to use a word blocklist
-- Add possibility to create aliases for words
-
 ## Working demo
 https://articexploit.xyz/demo/
 
@@ -40,3 +31,12 @@ The form in the html page takes the imput from the user, a php scripts gets the 
 
 ### Bonus :D
 This was thought of as a guestbook, but would work just as well as a comment section for a blog for example.
+
+## To Do
+A rewrite is needed since this guestbook doesn't allow for replies to replies, nor it does anything for spam protection.
+- ~~Add captcha system~~
+- ~~Add possibility of char limit~~
+- Add time and date to the posted message
+- Add new possible fields (email, website)
+- Add possibility to use a word blocklist
+- Add possibility to create aliases for words
