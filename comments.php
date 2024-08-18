@@ -14,7 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($characterLimit > 0 && strlen($message) > $characterLimit) {
             $message = htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8');
             $errorMsg = "Message exceeds the character limit of $characterLimit characters<br><h3>Your Message</h3><p>$message</p>";
-        } else if (!empty($message)) {
+        } else if (empty($message)) {
+            $errorMsg = "Message cannot be empty";
+        } else {
             // Load the existing data
             $data = array();
             if (file_exists('data.json') && filesize('data.json') > 0) {
@@ -23,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if the message already exists
             $flag = true;
             foreach ($data as $submission) {
-                if ($submission['name'] == $name && $submission['message'] == $message) {
+                if ($submission['message'] == $message) {
                     $flag = false;
                     break;
                 }
@@ -32,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($flag) {
                 array_unshift($data, array("name" => $name, "message" => $message, "rname" => "", "rmessage" => ""));
                 file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
+            } else {
+                $errorMsg = "Message is a duplicate";
             }
         }
     }
