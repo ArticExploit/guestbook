@@ -1,6 +1,6 @@
 <?php
 $messageCharacterLimit = 500; // Set the limit here for message, set to 0 for unlimited characters
-$usernameCharacterLimit = 30; // Set the limit here for username, set to 0 for unlimited characters
+$usernameCharacterLimit = 15; // Set the limit here for username, set to 0 for unlimited characters
 
 // If the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
