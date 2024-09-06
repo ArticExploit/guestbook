@@ -1,32 +1,42 @@
 <?php
-$messageCharacterLimit = 500; // Set the limit here for message, set to 0 for unlimited characters
+$messageCharacterLimit = 300; // Set the limit here for message, set to 0 for unlimited characters
 $usernameCharacterLimit = 15; // Set the limit here for username, set to 0 for unlimited characters
+
+$errorMsg = array(); // Initialize an array to store all errors
 
 // If the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check the captcha
     if ($_SESSION["captcha"] != $_POST["captcha"]) {
-        $errorMsg = "Invalid captcha, it's case sensitive<br><h3>Your Message</h3><p>" . htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8') . "</p>";
-    } else {
-        // Get the form data
-        $name = $_POST['name'] ? $_POST['name'] : "anon";
-        $message = $_POST['message'];
+        $errorMsg['captcha'] = "Invalid captcha, it's case sensitive";
+    } 
 
-        // Check the character limit for username and message
-        $errorMsg = checkCharacterLimit($name, $usernameCharacterLimit, "Username");
-        if(!$errorMsg){
-            $errorMsg = checkCharacterLimit($message, $messageCharacterLimit, "Message");
-        }
+    // Get the form data
+    $name = $_POST['name'] ? $_POST['name'] : "anon";
+    $message = $_POST['message'];
 
-        if(!$errorMsg){
-            $errorMsg = checkMessage($message, $name);
-        }
+    // Check the character limit for username
+    $usernameError = checkCharacterLimit($name, $usernameCharacterLimit, "Username");
+    if($usernameError){
+        $errorMsg['username'] = $usernameError;
+    }
+
+    // Check the character limit for message
+    $messageError = checkCharacterLimit($message, $messageCharacterLimit, "Comment");
+    if($messageError){
+        $errorMsg['message'] = $messageError;
+    }
+
+    // Check for duplicates
+    $duplicateError = checkMessage($message, $name);
+    if($duplicateError){
+        $errorMsg['duplicate'] = $duplicateError;
     }
 }
 
 function checkCharacterLimit($input, $limit, $type){
     if ($limit > 0 && strlen($input) > $limit) {
-        return "$type exceeds the character limit of $limit characters<br><h3>Your $type</h3><p>" . htmlspecialchars($input, ENT_QUOTES, 'UTF-8') . "</p>";
+        return "$type exceeds the character limit of $limit characters";
     } else if (empty($input)) {
         return "$type cannot be empty";
     }
@@ -42,7 +52,7 @@ function checkMessage($message, $name){
     // Check if the message already exists
     foreach ($data as $submission) {
         if ($submission['message'] == $message) {
-            return "Message is a duplicate<br><h3>Your Message</h3><p>" . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . "</p>";
+            return "Comment is a duplicate";
         }
     }
     // If the message is new, add it to the data
@@ -56,27 +66,54 @@ $json = file_get_contents('data.json');
 $data = json_decode($json, true);
 ?>
 
-<div>
+<div class="entry">
     <h2>Leave a Message</h2>
     <form action="" method="post">
         <input class="box" type="text" id="name" name="name" placeholder="enter name or leave empty for anon"><br><br>
-        <textarea class="box" id="message" name="message" placeholder="enter your message"></textarea><br><br>
+        <textarea class="box" id="message" name="message" placeholder="enter your comment"></textarea><br><br>
         <img src="/assets/main/pages/captcha.php" alt="captcha"> <input class="box" type="text" name="captcha" placeholder="enter the captcha"><br><br>
         <input class="button" type="submit" name="submit" value="Submit">
     </form>
-    <?php if (isset($errorMsg)): ?>
-        <div>
-            <h2>Error</h2>
-            <p><?= $errorMsg ?></p>
+    <?php if(isset($errorMsg['captcha']) || isset($errorMsg['message']) || isset($errorMsg['username'])): ?>
+        <div class="error">
+            <h3>Your Name</h3>
+            <p><?= htmlspecialchars($name) ?></p>
+            <?php if(!empty($message)): ?>
+                <h3>Your Comment</h3>
+                <p><?= htmlspecialchars($message) ?></p>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+    <?php if(isset($errorMsg['captcha'])): ?>
+        <div class="error">
+            <h2>Captcha Error</h2>
+            <p><?= $errorMsg['captcha'] ?></p>
+        </div>
+    <?php endif; ?>
+    <?php if(isset($errorMsg['username'])): ?>
+        <div class="error">
+            <h2>Name Error</h2>
+            <p><?= $errorMsg['username'] ?></p>
+        </div>
+    <?php endif; ?>
+    <?php if(isset($errorMsg['message']) || isset($errorMsg['duplicate'])): ?>
+        <div class="error">
+            <h2>Comment Error</h2>
+            <?php if(isset($errorMsg['duplicate'])): ?>
+                <p><?= $errorMsg['duplicate'] ?></p>
+            <?php endif; ?>
+            <?php if(isset($errorMsg['message'])): ?>
+                <p><?= $errorMsg['message'] ?></p>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
     <div>
-        <h2>Messages</h2>
-        <div id="messages">
+        <h2>Comments</h2>
+        <div id="comments">
             <?php
             if (!empty($data)) {
                 foreach ($data as $item) {
-                    echo '<div class="message">';
+                    echo '<div class="comment">';
                     echo '<p><strong>' . htmlspecialchars($item['name']) . '</strong>: ' . htmlspecialchars($item['message']) . '</p>';
                     if (!empty($item['rname']) || !empty($item['rmessage'])) {
                         echo '<div class="reply">';
