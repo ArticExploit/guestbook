@@ -22,15 +22,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check the character limit for message
-    $messageError = checkCharacterLimit($message, $messageCharacterLimit, "Comment");
+    $messageError = checkCharacterLimit($message, $messageCharacterLimit, "Message");
     if($messageError){
         $errorMsg['message'] = $messageError;
     }
 
     // Check for duplicates
-    $duplicateError = checkMessage($message, $name);
+    $duplicateError = checkMessage($message);
     if($duplicateError){
         $errorMsg['duplicate'] = $duplicateError;
+    }
+
+    // If there are no errors, write the data to the JSON file
+    if (empty($errorMsg)) {
+        // Load the existing data
+        $data = array();
+        if (file_exists('data.json') && filesize('data.json') > 0) {
+            $data = json_decode(file_get_contents('data.json'), true);
+        }
+        // Add the new message to the data
+        array_unshift($data, array("name" => $name, "message" => $message, "rname" => "", "rmessage" => ""));
+        file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
     }
 }
 
@@ -43,7 +55,7 @@ function checkCharacterLimit($input, $limit, $type){
     return false;
 }
 
-function checkMessage($message, $name){
+function checkMessage($message){
     // Load the existing data
     $data = array();
     if (file_exists('data.json') && filesize('data.json') > 0) {
@@ -55,9 +67,6 @@ function checkMessage($message, $name){
             return "Comment is a duplicate";
         }
     }
-    // If the message is new, add it to the data
-    array_unshift($data, array("name" => $name, "message" => $message, "rname" => "", "rmessage" => ""));
-    file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
     return false;
 }
 
@@ -67,10 +76,10 @@ $data = json_decode($json, true);
 ?>
 
 <div class="entry">
-    <h2>Leave a Message</h2>
+    <h2>Leave a Comment</h2>
     <form action="" method="post">
         <input class="box" type="text" id="name" name="name" placeholder="enter name or leave empty for anon"><br><br>
-        <textarea class="box" id="message" name="message" placeholder="enter your comment"></textarea><br><br>
+        <textarea class="box" id="message" name="message" placeholder="enter your message"></textarea><br><br>
         <img src="/assets/main/pages/captcha.php" alt="captcha"> <input class="box" type="text" name="captcha" placeholder="enter the captcha"><br><br>
         <input class="button" type="submit" name="submit" value="Submit">
     </form>
